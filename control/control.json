@@ -5,7 +5,7 @@
       "routes": [
         {
           "path": "example1_route1",
-          "current_reponse": "./mock_json/example1_route1/response_1.json",
+          "current_response": "./mock_json/example1_route1/response_1.json",
           "responses": [
             "./mock_json/example1_route1/response_1.json",
             "./mock_json/example1_route1/response_2.json",
@@ -14,7 +14,7 @@
         },
         {
           "path": "example1_route2",
-          "current_reponse": "./mock_json/example1_route2/response_1.json",
+          "current_response": "./mock_json/example1_route2/response_1.json",
           "responses": [
             "./mock_json/example1_route2/response_1.json",
             "./mock_json/example1_route2/response_2.json",
@@ -28,7 +28,7 @@
       "routes": [
         {
           "path": "example2_route1",
-          "current_reponse": "./mock_json/example2_route1/response_1.json",
+          "current_response": "./mock_json/example2_route1/response_1.json",
           "responses": [
             "./mock_json/example2_route1/response_1.json",
             "./mock_json/example2_route1/response_2.json",
@@ -42,7 +42,7 @@
       "routes": [
         {
           "path": "example3_route1",
-          "current_reponse": "./mock_json/example3_route1/response_1.json",
+          "current_response": "./mock_json/example3_route1/response_1.json",
           "responses": [
             "./mock_json/example3_route1/response_1.json",
             "./mock_json/example3_route1/response_2.json",

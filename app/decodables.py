@@ -28,7 +28,7 @@ class Service:
     def get_response_for_path(self, path):
         for r in self.routes:
             if r.get_path() == path:
-                return r.get_current_reponse()
+                return r.get_current_response()
 
     @classmethod
     def from_dict(cls, json_dict):
@@ -37,9 +37,9 @@ class Service:
 
 class Route:
 
-    def __init__(self, path, current_reponse, responses):
+    def __init__(self, path, current_response, responses):
         self.path = path
-        self.current_reponse = current_reponse
+        self.current_response = current_response
         self.responses = responses
 
     def get_path(self):
@@ -48,8 +48,8 @@ class Route:
     def get_responses(self):
         return self.responses
 
-    def get_current_reponse(self):
-        return self.current_reponse
+    def get_current_response(self):
+        return self.current_response
 
     @classmethod
     def from_dict(cls, json_dict):
