@@ -6,9 +6,9 @@ app = Flask(__name__)
 config.config_env(app)
 
 
-@app.route('/<route_string>', methods=['GET'])
-def get_route(route_string):
-    return controller.get_response_for_route(route_string)
+@app.route('/<path:string_route>', methods=['GET'])
+def get_route(string_route):
+    return controller.get_response_for_route(string_route)
 
 
 if __name__ == '__main__':

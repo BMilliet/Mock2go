@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mock Api</title>
+</head>
+
+<body>
+  <h3>Flask Mock API</h3>
+
+  {% if services %}
+  <div>
+    {% for service in services %}
+    <h4>{{ service.get_name() }}</h4>
+    <div>
+      <h6>{% for route in service.get_routes() %}</h6>
+      <div>
+        route:
+        {{ route.get_path() }}
+        <p>
+          Current response =>
+          {{ route.get_current_response() }}
+        </p>
+        <p>
+          {% for r in route.get_responses() %}
+        <div>{{ r }}</div>
+        {% endfor %}
+        </p>
+      </div>
+      {% endfor %}
+    </div>
+    {% endfor %}
+  </div>
+  {% endif %}
+
+</body>
+
+</html>
