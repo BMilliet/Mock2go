@@ -1,0 +1,25 @@
+h4 {
+  color: rgb(0, 255, 179);
+}
+
+div.services {
+  color: darkgray;
+  padding-top: 50px;
+  padding-right: 30px;
+  padding-left: 80px;
+}
+
+div.routes_container {
+  color: darkgray;
+  padding-top: 16;
+  padding-left: 80px;
+}
+
+div.form_element {
+  padding-top: 8;
+}
+
+div.diviser {
+  color: black;
+  height: 1px;
+}

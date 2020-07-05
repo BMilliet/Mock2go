@@ -4,6 +4,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
   <title>Mock Api</title>
 </head>
 
@@ -11,27 +12,39 @@
   <h3>Flask Mock API</h3>
 
   {% if services %}
-  <div>
+  <div class="services">
     {% for service in services %}
     <h4>{{ service.get_name() }}</h4>
-    <div>
+    <div class="routes_container">
       <h6>{% for route in service.get_routes() %}</h6>
       <div>
-        route:
-        {{ route.get_path() }}
         <p>
-          Current response =>
-          {{ route.get_current_response() }}
+          route:
+          {{ route.get_path() }}
         </p>
-        <p>
-          {% for r in route.get_responses() %}
-        <div>{{ r }}</div>
-        {% endfor %}
-        </p>
+        <div class="form_element">
+          <select name="responses" method="GET" action="/">
+            <option value="{{route.get_current_response()}}" SELECTED>{{route.get_current_response()}}</option>"
+            {% for r in route.get_responses() %}
+            {% if r != route.get_current_response() %}
+            <option value="{{r}}">{{r}}</option>"
+            {% endif %}
+            {% endfor %}
+          </select>
+        </div>
+        <div class="form_element">
+          <label>status-code(current: {{ route.get_status() }})</label>
+          <input type="number">
+        </div>
+        <div class="form_element">
+          <label>delay(current: {{ route.get_delay() }})</label>
+          <input type="number">
+        </div>
       </div>
       {% endfor %}
     </div>
     {% endfor %}
+    <div class="diviser"></div>
   </div>
   {% endif %}
 

@@ -1,6 +1,6 @@
 import time
 from flask import render_template, Response, json
-from . import jsonLoader, decodables
+from . import decodables
 
 
 def get_response_for_route(path):
@@ -25,7 +25,7 @@ def _get_response_for_path(path, services):
         if path in s.get_paths():
             response = s.get_response_for_path(path)
             return _build_reponse(response)
-    return 'path not found'
+    return Response('path not found', status=404)
 
 
 def _has_route_with_parameter(path1, path2):
@@ -42,7 +42,7 @@ def _render_index():
 def _get_services():
     services = []
 
-    control = jsonLoader.loadJson('./control/control.json')
+    control = _loadJson('./control/control.json')
     for service in control['services']:
         services.append(decodables.Service.from_dict(service))
     return services
@@ -50,7 +50,12 @@ def _get_services():
 
 def _build_reponse(response_tuple):
     time.sleep(response_tuple[2])
-    body = jsonLoader.loadJson(response_tuple[0])
+    body = _loadJson(response_tuple[0])
     return Response(response=json.dumps(body),
                     status=response_tuple[1],
                     mimetype='application/json')
+
+
+def _loadJson(file_path):
+    with open(file_path) as f:
+        return json.loads(f.read())
