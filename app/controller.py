@@ -1,12 +1,12 @@
 import time
-from flask import render_template, Response, json
+from flask import render_template, Response, json, request, redirect
 from . import decodables
 
 
-def get_response_for_route(path):
+def get_response_for_route(path, req):
     services = _get_services()
     if path == 'index':
-        return _render_index()
+        return _handle_index(req)
     return _get_response(path, services)
 
 
@@ -35,7 +35,13 @@ def _has_route_with_parameter(path1, path2):
     return False
 
 
-def _render_index():
+def _handle_index(req):
+    if req.method == 'POST':
+        print('post')
+        teste = request.form
+        print(teste)
+        print(req.url)
+        return redirect(req.url)
     return render_template('index.html', services=_get_services())
 
 
