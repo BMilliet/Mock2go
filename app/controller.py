@@ -37,10 +37,7 @@ def _has_route_with_parameter(path1, path2):
 
 def _handle_index(req):
     if req.method == 'POST':
-        print('post')
-        teste = request.form
-        print(teste)
-        print(req.url)
+        _handle_post_form(request.form)
         return redirect(req.url)
     return render_template('index.html', services=_get_services())
 
@@ -65,3 +62,10 @@ def _build_reponse(response_tuple):
 def _loadJson(file_path):
     with open(file_path) as f:
         return json.loads(f.read())
+
+
+def _handle_post_form(form):
+    services = _get_services()
+    for s in services:
+        if s.get_name() == form['service_name']:
+            print(form['service_name'])

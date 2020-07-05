@@ -11,9 +11,9 @@
 <body>
   <h3>Flask Mock API</h3>
   {% if services %}
-  <form action="/index" method="POST">
-    <div class="services">
-      {% for service in services %}
+  <div class="services">
+    {% for service in services %}
+    <form action="/index" method="POST">
       <h4>{{ service.get_name() }}</h4>
       <input style="display: none;" type="text" value="{{ service.get_name() }}" name="service_name">
       <div class="routes_container">
@@ -24,8 +24,8 @@
             {{ route.get_path() }}
           </p>
           <div class="form_element">
-            <select name="selected_response" method="GET" action="/">
-              <option value="{{route.get_current_response()}}" SELECTED>{{route.get_current_response()}}</option>"
+            <select name="selected_response_{{ route.get_path() }}" method="GET" action="/">
+              <option value="{{ route.get_current_response() }}" SELECTED>{{route.get_current_response()}}</option>"
               {% for r in route.get_responses() %}
               {% if r != route.get_current_response() %}
               <option value="{{r}}">{{r}}</option>"
@@ -35,27 +35,25 @@
           </div>
           <div class="form_element">
             <label>status-code: </label>
-            <input type="number" value="{{ route.get_status() }}" name="status">
+            <input type="number" value="{{ route.get_status() }}" name="status_{{ route.get_path() }}">
           </div>
           <div class="form_element">
             <label>delay: </label>
-            <input type="number" value="{{ route.get_delay() }}" name="delay">
+            <input type="number" value="{{ route.get_delay() }}" name="delay_{{ route.get_path() }}">
           </div>
         </div>
         {% endfor %}
       </div>
-      <div class="diviser"></div>
-      {% endfor %}
-      <div style="height: 32px;"></div>
-      <footer>
-        <div>
-          <button type="submit">Update</button>
-          <div class="space"></div>
-        </div>
-      </footer>
-    </div>
-    <div class="space"></div>
-  </form>
+      <div>
+        <button type="submit">Update</button>
+        <div class="space"></div>
+      </div>
+    </form>
+    <div class="diviser"></div>
+    {% endfor %}
+    <div style="height: 32px;"></div>
+  </div>
+  <div class="space"></div>
   {% endif %}
 </body>
 
