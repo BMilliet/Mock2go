@@ -1,0 +1,42 @@
+h4 {
+  color: rgb(0, 255, 179);
+}
+
+div.services {
+  color: rgb(110, 110, 110);
+  padding-top: 50px;
+  padding-right: 30px;
+  padding-left: 80px;
+}
+
+div.routes_container {
+  color: rgb(110, 110, 110);
+  padding-top: 16;
+  padding-left: 80px;
+}
+
+div.form_element {
+  padding-top: 8;
+}
+
+div.diviser {
+  color: black;
+  height: 1px;
+}
+
+div.space {
+  height: 50px;
+}
+
+footer {
+  position: fixed;
+  bottom:0;
+  left:50%;
+}
+
+button {
+  height: 32px;
+  margin-top: 32px;
+  margin-bottom: 32px;
+  padding-right: 50px;
+}

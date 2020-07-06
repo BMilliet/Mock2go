@@ -4,37 +4,57 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
   <title>Mock Api</title>
 </head>
 
 <body>
   <h3>Flask Mock API</h3>
-
   {% if services %}
-  <div>
+  <div class="services">
     {% for service in services %}
-    <h4>{{ service.get_name() }}</h4>
-    <div>
-      <h6>{% for route in service.get_routes() %}</h6>
-      <div>
-        route:
-        {{ route.get_path() }}
-        <p>
-          Current response =>
-          {{ route.get_current_response() }}
-        </p>
-        <p>
-          {% for r in route.get_responses() %}
-        <div>{{ r }}</div>
+    <form action="/index" method="POST">
+      <h4>{{ service.get_name() }}</h4>
+      <input style="display: none;" type="text" value="{{ service.get_name() }}" name="service_name">
+      <div class="routes_container">
+        <h6>{% for route in service.get_routes() %}</h6>
+        <div>
+          <p>
+            route:
+            {{ route.get_path() }}
+          </p>
+          <div class="form_element">
+            <label>current response: </label>
+            <select name="selected_response_{{ route.get_path() }}" method="GET" action="/">
+              <option value="{{ route.get_current_response() }}" SELECTED>{{route.get_current_response()}}</option>"
+              {% for r in route.get_responses() %}
+              {% if r != route.get_current_response() %}
+              <option value="{{r}}">{{r}}</option>"
+              {% endif %}
+              {% endfor %}
+            </select>
+          </div>
+          <div class="form_element">
+            <label>status-code: </label>
+            <input type="number" value="{{ route.get_status() }}" name="status_{{ route.get_path() }}">
+          </div>
+          <div class="form_element">
+            <label>delay: </label>
+            <input type="number" value="{{ route.get_delay() }}" name="delay_{{ route.get_path() }}">
+          </div>
+        </div>
         {% endfor %}
-        </p>
       </div>
-      {% endfor %}
-    </div>
+      <div>
+        <button type="submit">Update</button>
+        <div class="space"></div>
+      </div>
+    </form>
     {% endfor %}
+    <div style="height: 32px;"></div>
   </div>
+  <div class="space"></div>
   {% endif %}
-
 </body>
 
 </html>
