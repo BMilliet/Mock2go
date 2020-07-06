@@ -3,14 +3,14 @@ h4 {
 }
 
 div.services {
-  color: darkgray;
+  color: rgb(110, 110, 110);
   padding-top: 50px;
   padding-right: 30px;
   padding-left: 80px;
 }
 
 div.routes_container {
-  color: darkgray;
+  color: rgb(110, 110, 110);
   padding-top: 16;
   padding-left: 80px;
 }
@@ -38,4 +38,5 @@ button {
   height: 32px;
   margin-top: 32px;
   margin-bottom: 32px;
+  padding-right: 50px;
 }

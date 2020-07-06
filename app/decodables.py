@@ -33,6 +33,18 @@ class Service:
                         r.get_delay())
         return None
 
+    def serialize(self):
+        return {
+            'name': self.name,
+            'routes': self.get_serialized_routes()
+        }
+
+    def get_serialized_routes(self):
+        serialized_routes = []
+        for r in self.routes:
+            serialized_routes.append(r.serialize())
+        return serialized_routes
+
     @classmethod
     def from_dict(cls, json_dict):
         return cls(**json_dict)
@@ -43,8 +55,8 @@ class Route:
     def __init__(self, path, current_response, status, delay, responses):
         self.path = path
         self.current_response = current_response
-        self.status = status
-        self.delay = delay
+        self.status = int(status)
+        self.delay = int(delay)
         self.responses = responses
 
     def get_path(self):
@@ -61,6 +73,15 @@ class Route:
 
     def get_delay(self):
         return self.delay
+
+    def serialize(self):
+        return {
+            'path': self.path,
+            'current_response': self.current_response,
+            'status': self.status,
+            'delay': self.delay,
+            'responses': self.responses
+        }
 
     @classmethod
     def from_dict(cls, json_dict):

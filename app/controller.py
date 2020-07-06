@@ -68,4 +68,24 @@ def _handle_post_form(form):
     services = _get_services()
     for s in services:
         if s.get_name() == form['service_name']:
-            print(form['service_name'])
+            for r in s.get_routes():
+                r.current_response = form[(
+                    'selected_response_%s' % r.get_path())]
+                r.status = form[('status_%s' % r.get_path())]
+                r.delay = form[('delay_%s' % r.get_path())]
+    _create_json_file(_create_control_json(services))
+
+
+def _create_control_json(services):
+    services_list = []
+    for s in services:
+        services_list.append(s.serialize())
+    control_json = {
+        'services': services_list
+    }
+    return json.dumps(control_json, indent=2, sort_keys=True)
+
+
+def _create_json_file(json_file):
+    with open('./control/control.json', 'w') as f:
+        f.write(json_file)

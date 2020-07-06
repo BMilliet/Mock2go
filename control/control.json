@@ -4,26 +4,26 @@
       "name": "service1",
       "routes": [
         {
-          "path": "example1/route1",
           "current_response": "./mock_json/example1/route1/response_1.json",
-          "status": 200,
-          "delay": 0,
+          "delay": "0",
+          "path": "example1/route1",
           "responses": [
             "./mock_json/example1/route1/response_1.json",
             "./mock_json/example1/route1/response_2.json",
             "./mock_json/example1/route1/response_3.json"
-          ]
+          ],
+          "status": "200"
         },
         {
-          "path": "example1/route2",
           "current_response": "./mock_json/example1/route2/response_1.json",
-          "status": 200,
-          "delay": 0,
+          "delay": "0",
+          "path": "example1/route2",
           "responses": [
             "./mock_json/example1/route2/response_1.json",
             "./mock_json/example1/route2/response_2.json",
             "./mock_json/example1/route2/response_3.json"
-          ]
+          ],
+          "status": "200"
         }
       ]
     },
@@ -31,15 +31,15 @@
       "name": "service2",
       "routes": [
         {
-          "path": "example2/route1",
           "current_response": "./mock_json/example2/route1/response_1.json",
-          "status": 200,
           "delay": 0,
+          "path": "example2/route1",
           "responses": [
             "./mock_json/example2/route1/response_1.json",
             "./mock_json/example2/route1/response_2.json",
             "./mock_json/example2/route1/response_3.json"
-          ]
+          ],
+          "status": 200
         }
       ]
     },
@@ -47,15 +47,15 @@
       "name": "service3",
       "routes": [
         {
-          "path": "example3/route1",
           "current_response": "./mock_json/example3/route1/response_1.json",
-          "status": 200,
           "delay": 0,
+          "path": "example3/route1",
           "responses": [
             "./mock_json/example3/route1/response_1.json",
             "./mock_json/example3/route1/response_2.json",
             "./mock_json/example3/route1/response_3.json"
-          ]
+          ],
+          "status": 200
         }
       ]
     },
@@ -63,13 +63,13 @@
       "name": "service4",
       "routes": [
         {
-          "path": "example4/route1/PARAMETER",
           "current_response": "./mock_json/example4/route1/response_1.json",
-          "status": 200,
           "delay": 0,
+          "path": "example4/route1/PARAMETER",
           "responses": [
             "./mock_json/example4/route1/response_1.json"
-          ]
+          ],
+          "status": 200
         }
       ]
     }

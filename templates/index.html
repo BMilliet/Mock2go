@@ -24,6 +24,7 @@
             {{ route.get_path() }}
           </p>
           <div class="form_element">
+            <label>current response: </label>
             <select name="selected_response_{{ route.get_path() }}" method="GET" action="/">
               <option value="{{ route.get_current_response() }}" SELECTED>{{route.get_current_response()}}</option>"
               {% for r in route.get_responses() %}
@@ -49,7 +50,6 @@
         <div class="space"></div>
       </div>
     </form>
-    <div class="diviser"></div>
     {% endfor %}
     <div style="height: 32px;"></div>
   </div>
