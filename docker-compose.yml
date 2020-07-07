@@ -1,0 +1,9 @@
+version: '3.7'
+
+services:
+  flask_mock_api:
+    build: .
+    volumes:
+      - .:/app
+    ports:
+      - 5000:5000

@@ -67,12 +67,11 @@ def _loadJson(file_path):
 def _handle_post_form(form):
     services = _get_services()
     for s in services:
-        if s.get_name() == form['service_name']:
-            for r in s.get_routes():
-                r.current_response = form[(
-                    'selected_response_%s' % r.get_path())]
-                r.status = form[('status_%s' % r.get_path())]
-                r.delay = form[('delay_%s' % r.get_path())]
+        for r in s.get_routes():
+            r.current_response = form[(
+                'selected_response_%s' % r.get_path())]
+            r.status = form[('status_%s' % r.get_path())]
+            r.delay = form[('delay_%s' % r.get_path())]
     _create_json_file(_create_control_json(services))
 
 

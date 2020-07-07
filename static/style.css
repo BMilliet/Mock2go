@@ -1,16 +1,25 @@
+body {
+  margin-bottom: 50px;
+}
+
+h3 {
+  padding-top: 18px;
+  padding-left: 50px;
+}
+
 h4 {
-  color: rgb(0, 255, 179);
+  color: rgb(1, 224, 157);
+  padding-top: 8px;
+  padding-left: 50px;
 }
 
 div.services {
-  color: rgb(110, 110, 110);
   padding-top: 50px;
-  padding-right: 30px;
-  padding-left: 80px;
+  margin-left: 50px;
 }
 
 div.routes_container {
-  color: rgb(110, 110, 110);
+  background-color: rgb(252, 233, 206);
   padding-top: 16;
   padding-left: 80px;
 }
@@ -19,24 +28,25 @@ div.form_element {
   padding-top: 8;
 }
 
-div.diviser {
-  color: black;
-  height: 1px;
-}
-
 div.space {
   height: 50px;
 }
 
 footer {
   position: fixed;
-  bottom:0;
-  left:50%;
+  height: 70px;
+  background-color: rgb(223, 223, 223);
+  bottom: 0px;
+  left: 0px;
+  right: 0px;
+  margin-bottom: 0px;
 }
 
 button {
+  color: black;
+  background-color: cyan;
   height: 32px;
-  margin-top: 32px;
+  margin-top: 18px;
   margin-bottom: 32px;
-  padding-right: 50px;
+  margin-left: 600px;
 }
