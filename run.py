@@ -1,9 +1,10 @@
 from flask import Flask, request
-from app import config, controller
+from app import controller
 
 app = Flask(__name__)
 
-config.config_env(app)
+app.config['ENV'] = 'Development'
+app.config['DEBUG'] = True
 
 
 @app.route('/<path:string_route>', methods=['GET', 'POST'])
@@ -12,4 +13,4 @@ def get_route(string_route):
 
 
 if __name__ == '__main__':
-    app.run()
+    app.run(host='0.0.0.0')

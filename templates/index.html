@@ -11,9 +11,9 @@
 <body>
   <h3>Flask Mock API</h3>
   {% if services %}
-  <div class="services">
-    {% for service in services %}
-    <form action="/index" method="POST">
+  <form action="/index" method="POST">
+    <div class="services">
+      {% for service in services %}
       <h4>{{ service.get_name() }}</h4>
       <input style="display: none;" type="text" value="{{ service.get_name() }}" name="service_name">
       <div class="routes_container">
@@ -45,15 +45,17 @@
         </div>
         {% endfor %}
       </div>
+      {% endfor %}
+      <div style="height: 32px;"></div>
+    </div>
+    <div class="space"></div>
+    <footer>
       <div>
         <button type="submit">Update</button>
         <div class="space"></div>
       </div>
-    </form>
-    {% endfor %}
-    <div style="height: 32px;"></div>
-  </div>
-  <div class="space"></div>
+    </footer>
+  </form>
   {% endif %}
 </body>
 

@@ -1,0 +1,14 @@
+.git*
+tmp*
+log*
+spec*
+vendor/bundle*
+.bundle*
+*Dockerfile
+.semaphore-cache
+.env*
+modules/*
+docker-compose.yml
+.DS_Store
+.vscode/
+__pycache__/
