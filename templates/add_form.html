@@ -12,7 +12,6 @@
   <h3>Add new service</h3>
 
   <form action="/add" method="POST">
-
     <div id="serviceContainer">
       <div class="form_element">
         <label>name: </label>
@@ -33,13 +32,12 @@
     </div>
     <footer>
       <div>
-        <button type="submit">Save</button>
+        <button class="default" type="submit">Save</button>
         <div class="space"></div>
       </div>
     </footer>
   </form>
-
-  <button id="addRouteButton">Add more routes</button>
+  <button class="addButton" id="addRouteButton">Add more routes</button>
 </body>
 
 <script type="text/javascript" src="{{ url_for('static', filename='scripts.js') }}"></script>

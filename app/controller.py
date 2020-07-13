@@ -6,6 +6,8 @@ from . import decodables
 def get_response_for_route(path, req):
     if path == 'index':
         return _handle_index(req)
+    elif path == 'edit':
+        return _handle_edit(req)
     elif path == 'add':
         return _handle_add(req)
 
@@ -90,8 +92,14 @@ def _create_control_json(services):
 def _handle_add(req):
     if req.method == 'POST':
         _handle_post_form_add(request.form)
-        return redirect(req.url)
+        return redirect('/index')
     return render_template('add_form.html')
+
+
+def _handle_edit(req):
+    if req.method == 'POST':
+        print("post")
+    return render_template('edit_form.html')
 
 
 def _handle_post_form_add(form):

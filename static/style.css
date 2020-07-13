@@ -42,7 +42,7 @@ footer {
   margin-bottom: 0px;
 }
 
-button {
+button.default {
   color: black;
   background-color: cyan;
   height: 32px;
@@ -50,4 +50,23 @@ button {
   margin-top: 18px;
   margin-bottom: 32px;
   margin-left: 600px;
+}
+
+button.addButton {
+  color: black;
+  background-color: rgb(0, 255, 42);
+  height: 32px;
+  width: 150px;
+  margin-top: 18px;
+  margin-bottom: 16px;
+  margin-left: 800px;
+}
+
+button.editButton {
+  color: black;
+  background-color: rgb(255, 73, 158);
+  height: 32px;
+  width: 150px;
+  margin-top: 18px;
+  margin-left: 50px;
 }
