@@ -74,6 +74,12 @@ class Route:
     def get_delay(self):
         return self.delay
 
+    def get_responses_formatted(self):
+        formatted = ""
+        for r in self.get_responses():
+            formatted += ("%s\r\n" % r)
+        return formatted
+
     def serialize(self):
         return {
             'path': self.path,

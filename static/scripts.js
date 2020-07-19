@@ -5,8 +5,8 @@ addRouteButton.addEventListener('click', () => {
   let routeTemplate = `
                         <div class="routes_container">
                           <div class="form_element">
-                            <label>path: </label>
-                            <input type="text" value="" name="path">
+                            <label>route: </label>
+                            <input type="text" value="" name="route">
                           </div>
                           <div style="height: 8px;"></div>
                           responses
