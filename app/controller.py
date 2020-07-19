@@ -4,10 +4,14 @@ from . import decodables
 
 
 def get_response_for_route(path, req):
-    services = _get_services()
     if path == 'index':
         return _handle_index(req)
-    return _get_response(path, services)
+    elif path == 'edit':
+        return _handle_edit(req)
+    elif path == 'add':
+        return _handle_add(req)
+
+    return _get_response(path, _get_services())
 
 
 def _get_response(path, services):
@@ -83,6 +87,70 @@ def _create_control_json(services):
         'services': services_list
     }
     return json.dumps(control_json, indent=2, sort_keys=True)
+
+
+def _handle_add(req):
+    if req.method == 'POST':
+        _handle_post_form_add(request.form)
+        return redirect('/index')
+    return render_template('add_form.html')
+
+
+def _handle_edit(req):
+    if req.method == 'POST':
+        _handle_edit_form(request.form)
+        return redirect('/index')
+    return render_template('edit_form.html',
+                           service=_get_service_by_name(req.args['name']))
+
+
+def _handle_edit_form(form):
+    if 'remove' in form['service_name']:
+        _handle_post_form_remove(form)
+    else:
+        _handle_post_form_edit(form)
+
+
+def _handle_post_form_remove(form):
+    services = _get_services()
+    for s in services:
+        if ("%s_remove" % s.get_name()) == form['service_name']:
+            services.remove(s)
+    _create_json_file(_create_control_json(services))
+
+
+def _handle_post_form_edit(form):
+    services = _get_services()
+    new = decodables.Service(
+        form['service_name'], _create_routes_from_form(form))
+    for s in services:
+        if s.get_name() == new.get_name():
+            services.remove(s)
+            services.append(new)
+    _create_json_file(_create_control_json(services))
+
+
+def _handle_post_form_add(form):
+    services = _get_services()
+    services.append(decodables.Service(
+        form['service_name'], _create_routes_from_form(form)))
+    _create_json_file(_create_control_json(services))
+
+
+def _create_routes_from_form(form):
+    routes = []
+    for i, r in enumerate(form.getlist('route')):
+        responses = form.getlist('responses')[i].split('\r\n')
+        routes.append(decodables.Route(
+            r, responses[0], 200, 0, responses).serialize())
+    return routes
+
+
+def _get_service_by_name(name):
+    for s in _get_services():
+        if name == s.get_name():
+            return s
+    return None
 
 
 def _create_json_file(json_file):

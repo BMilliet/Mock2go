@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+  <title>Add new</title>
+</head>
+
+<body>
+  <h3>Add new service</h3>
+
+  <form action="/add" method="POST">
+    <div id="serviceContainer">
+      <div class="form_element">
+        <label>name: </label>
+        <input type="text" value="" name="service_name">
+      </div>
+      <div class="routes_container">
+        <div class="form_element">
+          <label>route: </label>
+          <input type="text" value="" name="route">
+        </div>
+        <div style="height: 8px;"></div>
+        responses
+        <div class="form_element">
+          <textarea name="responses" cols="60" rows="5"></textarea>
+        </div>
+        <div style="height: 16px;"></div>
+      </div>
+    </div>
+    <footer>
+      <div>
+        <button class="default" type="submit">Save</button>
+        <div class="space"></div>
+      </div>
+    </footer>
+  </form>
+  <button class="addButton" id="addRouteButton">Add more routes</button>
+</body>
+
+<script type="text/javascript" src="{{ url_for('static', filename='scripts.js') }}"></script>
+
+</html>
