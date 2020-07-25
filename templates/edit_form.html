@@ -18,6 +18,7 @@
     </form>
     <div class="space"></div>
     <form action="/edit" method="POST">
+      <input style="display: none;" type="text" value="{{ service.get_name() }}" name="service_name">
       <div id="serviceContainer">
         <div class="routes_container">
           <h6>{% for route in service.get_routes() %}</h6>
