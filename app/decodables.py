@@ -80,6 +80,12 @@ class Route:
             formatted += ("%s\r\n" % r)
         return formatted
 
+    def get_responses_json(self):
+        json_list = []
+        for r in self.get_responses():
+            json_list.append(r.split('/')[-1])
+        return json_list
+
     def serialize(self):
         return {
             'path': self.path,

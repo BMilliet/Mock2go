@@ -2,6 +2,12 @@ body {
   margin-bottom: 50px;
 }
 
+h2 {
+  width: 100%;
+  margin: auto;
+  text-align: center;
+}
+
 h3 {
   padding-top: 18px;
   padding-left: 50px;
@@ -30,6 +36,14 @@ div.form_element {
 
 div.space {
   height: 50px;
+}
+
+div.space16 {
+  height: 16px;
+}
+
+div.space8 {
+  height: 8px;
 }
 
 footer {
@@ -69,4 +83,13 @@ button.editButton {
   width: 150px;
   margin-top: 18px;
   margin-left: 50px;
+}
+
+button.addFirst {
+  color: black;
+  background-color: rgb(0, 255, 191);
+  height: 32px;
+  width: 150px;
+  margin-left: 640px;
+  margin-top: 18px;
 }

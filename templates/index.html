@@ -10,6 +10,9 @@
 
 <body>
   <h3>Flask Mock API</h3>
+
+  {% if services %}
+
   <form action="/add" method="GET">
     <button class="addButton" type="submit">Add New</button>
   </form>
@@ -23,7 +26,6 @@
       {% endfor %}
     </select>
   </form>
-  {% if services %}
   <form action="/index" method="POST">
     <div class="services">
       {% for service in services %}
@@ -69,6 +71,16 @@
       </div>
     </footer>
   </form>
+
+  {% else %}
+
+  <div>
+    <h2>No services created yet</h2>
+    <form action="/add" method="GET">
+      <button class="addFirst" type="submit">Create first service</button>
+    </form>
+  </div>
+
   {% endif %}
 </body>
 

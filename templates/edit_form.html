@@ -12,35 +12,45 @@
   {% if service %}
   <div class="services">
     <h4>{{ service.get_name() }}</h4>
+
     <form action="/edit" method="POST">
       <input style="display: none;" type="text" value="{{ service.get_name() }}_remove" name="service_name">
-      <button class="editButton" type="submit">Remove</button>
+      <button class="editButton" type="submit">Delete service</button>
     </form>
+
     <div class="space"></div>
     <form action="/edit" method="POST">
       <input style="display: none;" type="text" value="{{ service.get_name() }}" name="service_name">
       <div id="serviceContainer">
         <div class="routes_container">
+
           <h6>{% for route in service.get_routes() %}</h6>
-          <div>
-            <div class="form_element">
-              <label>route: </label>
-              <input type="text" value="{{ route.get_path() }}" name="route">
-            </div>
-            responses
-            <div class="form_element">
-              <textarea name="responses" cols="60" rows="5">{{ route.get_responses_formatted() }}</textarea>
-            </div>
+          <div class="space16"></div>
+
+          <div class="form_element">
+            <label>route: </label>
+            <input type="text" value="{{ route.get_path() }}" name="route">
           </div>
+
+          <div class="form_element">
+            {% for json_file in route.get_responses_json() %}
+            <label>{{json_file}}</label>
+            <input type="checkbox" name="response_json">
+            <br>
+            {% endfor %}
+          </div>
+
           {% endfor %}
         </div>
         <div class="space"></div>
+
         <footer>
           <div>
             <button class="default" type="submit">Save</button>
             <div class="space"></div>
           </div>
         </footer>
+
       </div>
     </form>
     <button class="addButton" id="addRouteButton">Add more routes</button>

@@ -1,73 +1,24 @@
 {
   "services": [
     {
-      "name": "service1",
+      "name": "service5",
       "routes": [
         {
-          "current_response": "./mock_json/example1/route1/response_1.json",
+          "current_response": "./jsonMock/service5/route1/response_1.json",
           "delay": 0,
-          "path": "example1/route1",
+          "path": "route1",
           "responses": [
-            "./mock_json/example1/route1/response_1.json",
-            "./mock_json/example1/route1/response_2.json",
-            "./mock_json/example1/route1/response_3.json"
+            "./jsonMock/service5/route1/response_1.json"
           ],
           "status": 200
         },
         {
-          "current_response": "./mock_json/example1/route2/response_1.json",
+          "current_response": "./jsonMock/service5/route2/response_2.json",
           "delay": 0,
-          "path": "example1/route2",
+          "path": "route2",
           "responses": [
-            "./mock_json/example1/route2/response_1.json",
-            "./mock_json/example1/route2/response_2.json",
-            "./mock_json/example1/route2/response_3.json"
-          ],
-          "status": 200
-        }
-      ]
-    },
-    {
-      "name": "service2",
-      "routes": [
-        {
-          "current_response": "./mock_json/example2/route1/response_1.json",
-          "delay": 0,
-          "path": "example2/route1",
-          "responses": [
-            "./mock_json/example2/route1/response_1.json",
-            "./mock_json/example2/route1/response_2.json",
-            "./mock_json/example2/route1/response_3.json"
-          ],
-          "status": 200
-        }
-      ]
-    },
-    {
-      "name": "service3",
-      "routes": [
-        {
-          "current_response": "./mock_json/example3/route1/response_1.json",
-          "delay": 0,
-          "path": "example3/route1",
-          "responses": [
-            "./mock_json/example3/route1/response_1.json",
-            "./mock_json/example3/route1/response_2.json",
-            "./mock_json/example3/route1/response_3.json"
-          ],
-          "status": 200
-        }
-      ]
-    },
-    {
-      "name": "service4",
-      "routes": [
-        {
-          "current_response": "./mock_json/example4/route1/response_1.json",
-          "delay": 0,
-          "path": "example4/route1/PARAMETER",
-          "responses": [
-            "./mock_json/example4/route1/response_1.json"
+            "./jsonMock/service5/route2/response_2.json",
+            "./jsonMock/service5/route2/response_3.json"
           ],
           "status": 200
         }
