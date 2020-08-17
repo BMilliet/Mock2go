@@ -1,28 +1,3 @@
 {
-  "services": [
-    {
-      "name": "service5",
-      "routes": [
-        {
-          "current_response": "./jsonMock/service5/route1/response_1.json",
-          "delay": 0,
-          "path": "route1",
-          "responses": [
-            "./jsonMock/service5/route1/response_1.json"
-          ],
-          "status": 200
-        },
-        {
-          "current_response": "./jsonMock/service5/route2/response_2.json",
-          "delay": 0,
-          "path": "route2",
-          "responses": [
-            "./jsonMock/service5/route2/response_2.json",
-            "./jsonMock/service5/route2/response_3.json"
-          ],
-          "status": 200
-        }
-      ]
-    }
-  ]
+  "services": []
 }

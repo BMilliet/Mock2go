@@ -19,6 +19,10 @@ h4 {
   padding-left: 50px;
 }
 
+p.highlight {
+  color: rgb(81, 107, 255);
+}
+
 div.services {
   padding-top: 50px;
   margin-left: 50px;

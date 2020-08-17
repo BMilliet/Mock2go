@@ -19,7 +19,7 @@
     </form>
 
     <div class="space"></div>
-    <form action="/edit" method="POST">
+    <form action="/edit" method="POST" enctype="multipart/form-data">
       <input style="display: none;" type="text" value="{{ service.get_name() }}" name="service_name">
       <div id="serviceContainer">
         <div class="routes_container">
@@ -32,12 +32,22 @@
             <input type="text" value="{{ route.get_path() }}" name="route">
           </div>
 
+          {% if loop.first %}
+          <p class="highlight">mark the checkbox to delete</p>
+          {% endif %}
+
           <div class="form_element">
             {% for json_file in route.get_responses_json() %}
             <label>{{json_file}}</label>
-            <input type="checkbox" name="response_json">
+            <input type="checkbox" name="{{route.get_path()+json_file}}_remove_json">
             <br>
             {% endfor %}
+          </div>
+
+          <div class="space8"></div>
+          new responses
+          <div class="form_element">
+            <input type="file" multiple="multiple" name="responses{{loop.index0}}">
           </div>
 
           {% endfor %}

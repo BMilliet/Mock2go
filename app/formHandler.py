@@ -1,8 +1,4 @@
-from . import decodables, jsonHandler
-from werkzeug.utils import secure_filename
-import os
-
-JSON_STORAGE_DIR = "jsonMock"
+from . import decodables, jsonHandler, fileHandler
 
 
 def update_control_from_post_form(form):
@@ -20,29 +16,39 @@ def update_control_from_post_form_add_new(req):
     if not req.form or not req.files:
         return
 
-    routes = []
+    new_routes = []
     for i, route in enumerate(req.form.getlist('route')):
         responses_path = []
         files = req.files.getlist('responses%s' % i)
         if files:
             for f in files:
 
-                if not _valid_json(f.filename):
-                    return
+                if _valid_json(f.filename):
+                    file_path = fileHandler.build_file_path(
+                        req.form['service_name'],
+                        route,
+                        f.filename)
 
-                file_path = './%s/%s/%s/%s' % (JSON_STORAGE_DIR,
-                                               req.form['service_name'],
-                                               route,
-                                               secure_filename(f.filename))
-                # file_path.save(os.path)
+                    fileHandler.save_file_on_path(file_path, f)
+                    responses_path.append(file_path)
 
-                # os.makedirs(os.path.dirname(file_path), exist_ok=True)
-
-                responses_path.append(file_path)
-        routes.append(_create_route(route, responses_path))
+        if len(responses_path) > 0:
+            new_routes.append(_create_route(route, responses_path))
 
     services = jsonHandler.get_services()
-    services.append(decodables.Service(req.form['service_name'], routes))
+
+    if req.form['service_name'] in decodables.get_services_names(services):
+        for service in services:
+            if service.get_name() == req.form['service_name']:
+                for new in new_routes:
+                    new.update_routes()
+                    service.merge_routes(new)
+
+    else:
+        serialize_routes = map(_get_serialize_routes, new_routes)
+        services.append(decodables.Service(
+            req.form['service_name'], serialize_routes))
+
     jsonHandler.update_control(services)
 
 
@@ -55,37 +61,46 @@ def update_control_from_edit_form(req):
 
 
 def _update_control_from_remove(req):
-    ...
-    # services = jsonHandler.get_services()
-    # for s in services:
-    #     if ("%s_remove" % s.get_name()) == form['service_name']:
-    #         services.remove(s)
-    # jsonHandler.update_control(services)
+    services = jsonHandler.get_services()
+    for s in services:
+        if ("%s_remove" % s.get_name()) == req.form['service_name']:
+            services.remove(s)
+            fileHandler.delete_service(s.get_name())
+    jsonHandler.update_control(services)
 
 
 def _update_control_from_form_edit(req):
-    ...
-    # services = jsonHandler.get_services()
-    # new = decodables.Service(
-    #     form['service_name'], _create_routes_from_form(form))
-    # for s in services:
-    #     if s.get_name() == new.get_name():
-    #         services.remove(s)
-    #         services.append(new)
+    if not req.form:
+        return
+
+    services = jsonHandler.get_services()
+    for s in services:
+        if s.get_name() == req.form['service_name']:
+            for route in s.get_routes():
+
+                for response_path in route.get_responses():
+                    json_file = fileHandler.get_file_name(response_path)
+
+                    file_key = req.form.get('%s%s_remove_json' %
+                                            (route.get_path(),
+                                             json_file), None)
+
+                    if file_key is not None:
+                        fileHandler.remove_file(response_path)
+                        route.remove_response(response_path)
+                        route.update_routes()
+
     # jsonHandler.update_control(services)
-
-
-def _create_routes_from_form(form):
-    routes = []
-    for i, r in enumerate(form.getlist('route')):
-        responses = form.getlist('responses')[i].split('\r\n')
-        routes.append(decodables.Route(
-            r, responses[0], 200, 0, responses).serialize())
-    return routes
+    # if len(req.files.getlist('responses%s' % i))
+    update_control_from_post_form_add_new(req)
 
 
 def _create_route(route, responses):
-    return decodables.Route(route, responses[0], 200, 0, responses).serialize()
+    return decodables.Route(route, responses[0], 200, 0, responses)
+
+
+def _get_serialize_routes(route):
+    return route.serialize()
 
 
 def _valid_json(filename):

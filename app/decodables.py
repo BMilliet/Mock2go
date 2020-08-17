@@ -7,6 +7,13 @@ def generate_route(routes):
     return routes_list
 
 
+def get_services_names(services):
+    names = []
+    for s in services:
+        names.append(s.get_name())
+    return names
+
+
 class Service:
 
     def __init__(self, name, routes):
@@ -45,6 +52,15 @@ class Service:
             serialized_routes.append(r.serialize())
         return serialized_routes
 
+    def merge_routes(self, new_route):
+        for route in self.routes:
+            if route.get_path() == new_route.get_path():
+                for new_response in new_route.get_responses():
+                    if new_response not in route.get_responses():
+                        route.responses.append(new_response)
+            return
+        self.routes.append(new_route)
+
     @classmethod
     def from_dict(cls, json_dict):
         return cls(**json_dict)
@@ -74,6 +90,9 @@ class Route:
     def get_delay(self):
         return self.delay
 
+    def remove_response(self, resp):
+        self.responses.remove(resp)
+
     def get_responses_formatted(self):
         formatted = ""
         for r in self.get_responses():
@@ -85,6 +104,12 @@ class Route:
         for r in self.get_responses():
             json_list.append(r.split('/')[-1])
         return json_list
+
+    def update_routes(self):
+        if len(self.responses) > 0:
+            self.current_response = self.responses[0]
+        else:
+            self.current_response = ""
 
     def serialize(self):
         return {
