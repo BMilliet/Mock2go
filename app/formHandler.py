@@ -76,6 +76,7 @@ def _update_control_from_form_edit(req):
     services = jsonHandler.get_services()
     for s in services:
         if s.get_name() == req.form['service_name']:
+            print("edit on existing route %s" % req.form['service_name']) # apagar
             for route in s.get_routes():
 
                 for response_path in route.get_responses():
@@ -90,8 +91,7 @@ def _update_control_from_form_edit(req):
                         route.remove_response(response_path)
                         route.update_routes()
 
-    # jsonHandler.update_control(services)
-    # if len(req.files.getlist('responses%s' % i))
+    jsonHandler.update_control(services)
     update_control_from_post_form_add_new(req)
 
 
