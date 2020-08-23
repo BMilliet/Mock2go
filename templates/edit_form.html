@@ -36,7 +36,7 @@
           <p class="highlight">mark the checkbox to delete</p>
           {% endif %}
 
-          <div class="form_element">
+          <div class="form_element" id="routeId">
             {% for json_file in route.get_responses_json() %}
             <label>{{json_file}}</label>
             <input type="checkbox" name="{{route.get_path()+json_file}}_remove_json">

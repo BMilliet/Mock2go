@@ -3,12 +3,8 @@ from . import decodables
 
 
 def get_services():
-    services = []
-
     control = get_json_content('./control/control.json')
-    for service in control['services']:
-        services.append(decodables.Service.from_dict(service))
-    return services
+    return [decodables.Service.from_dict(s) for s in control['services']]
 
 
 def get_json_content(file_path):
@@ -26,10 +22,7 @@ def _create_json_file(json_file):
 
 
 def _create_control_json(services):
-    services_list = []
-    for s in services:
-        services_list.append(s.serialize())
     control_json = {
-        'services': services_list
+        'services': [s.serialize() for s in services]
     }
     return json.dumps(control_json, indent=2, sort_keys=True)

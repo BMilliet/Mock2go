@@ -14,6 +14,9 @@ class Service:
         self.name = name
         self.routes = generate_route(routes)
 
+    def __str__(self):
+        return 'Service => name: %s, routes: %s' % (self.get_name(), self.get_paths())
+
     def get_name(self):
         return self.name
 
@@ -40,7 +43,11 @@ class Service:
     def get_serialized_routes(self):
         return [r.serialize() for r in self.routes]
 
-    def merge_routes(self, new_route):
+    def merge_routes(self, new_routes):
+        for new in new_routes:
+            self._merge_route(new)
+
+    def _merge_route(self, new_route):
         if new_route.get_path() in self.get_paths():
 
             for existing_route in self.get_routes():
@@ -48,6 +55,7 @@ class Service:
 
                     existing_route.responses = list(
                         set(existing_route.responses + new_route.responses))
+                    existing_route.update_routes()
                     break
         else:
             self.routes.append(new_route)
@@ -65,6 +73,9 @@ class Route:
         self.status = int(status)
         self.delay = int(delay)
         self.responses = responses
+
+    def __str__(self):
+        return 'Route => path: %s, responses%s' % (self.get_path(), self.get_responses())
 
     def get_path(self):
         return self.path
