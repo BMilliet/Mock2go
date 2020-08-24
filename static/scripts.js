@@ -1,9 +1,10 @@
 
 let addRouteButton = document.querySelector('#addRouteButton');
 
-let routesCount = document.querySelectorAll('#routeId').length;
 
 addRouteButton.addEventListener('click', () => {
+  let routesCount = document.querySelectorAll('#routeId').length;
+
   let routeTemplate = `
                         <div class="routes_container">
                         <div class="form_element" id="routeId">

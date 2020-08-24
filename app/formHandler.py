@@ -62,19 +62,22 @@ def _delete_responses_if_needed(req):
         if s.get_name() == req.form['service_name']:
 
             for route in s.get_routes():
+                new_responses = []
 
                 for response_path in route.get_responses():
                     json_file = fileHandler.get_file_name(response_path)
-
                     file_key = req.form.get('%s%s_remove_json' %
                                             (route.get_path(),
                                              json_file),
                                             None)
 
-                    if file_key is not None:
+                    if file_key == "on":
                         fileHandler.remove_file(response_path)
-                        route.remove_response(response_path)
-                        route.update_routes()
+                    else:
+                        new_responses.append(response_path)
+
+                route.responses = new_responses
+                route.update_routes()
 
     jsonHandler.update_control(services)
 
