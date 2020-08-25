@@ -16,4 +16,5 @@ Run it with docker compose => `docker-compose up`
 With Python3 needs setup with pipenv or pip3
 
 setup => `pipenv install -r requirements.txt` or `pip3 install -r requirements.txt`
+
 run it => `pipenv run.py` or `python3 run.py`
