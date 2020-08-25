@@ -1,6 +1,6 @@
 import time
-from flask import render_template, Response, json, request, redirect
-from . import decodables
+from flask import render_template, Response, json, redirect
+from . import formHandler, jsonHandler
 
 
 def get_response_for_route(path, req):
@@ -11,10 +11,11 @@ def get_response_for_route(path, req):
     elif path == 'add':
         return _handle_add(req)
 
-    return _get_response(path, _get_services())
+    return _get_response(path)
 
 
-def _get_response(path, services):
+def _get_response(path):
+    services = jsonHandler.get_services()
     for s in services:
         for p in s.get_paths():
             if _has_route_with_parameter(path, p):
@@ -41,118 +42,37 @@ def _has_route_with_parameter(path1, path2):
 
 def _handle_index(req):
     if req.method == 'POST':
-        _handle_post_form(request.form)
+        formHandler.update_control_from_post_form(req.form)
         return redirect(req.url)
-    return render_template('index.html', services=_get_services())
 
-
-def _get_services():
-    services = []
-
-    control = _loadJson('./control/control.json')
-    for service in control['services']:
-        services.append(decodables.Service.from_dict(service))
-    return services
+    return render_template('index.html', services=jsonHandler.get_services())
 
 
 def _build_reponse(response_tuple):
     time.sleep(response_tuple[2])
-    body = _loadJson(response_tuple[0])
+    body = jsonHandler.get_json_content(response_tuple[0])
     return Response(response=json.dumps(body),
                     status=response_tuple[1],
                     mimetype='application/json')
 
 
-def _loadJson(file_path):
-    with open(file_path) as f:
-        return json.loads(f.read())
-
-
-def _handle_post_form(form):
-    services = _get_services()
-    for s in services:
-        for r in s.get_routes():
-            r.current_response = form[(
-                'selected_response_%s' % r.get_path())]
-            r.status = form[('status_%s' % r.get_path())]
-            r.delay = form[('delay_%s' % r.get_path())]
-    _create_json_file(_create_control_json(services))
-
-
-def _create_control_json(services):
-    services_list = []
-    for s in services:
-        services_list.append(s.serialize())
-    control_json = {
-        'services': services_list
-    }
-    return json.dumps(control_json, indent=2, sort_keys=True)
-
-
 def _handle_add(req):
     if req.method == 'POST':
-        _handle_post_form_add(request.form)
+        formHandler.update_control_from_post_form_add_new(req)
         return redirect('/index')
     return render_template('add_form.html')
 
 
 def _handle_edit(req):
     if req.method == 'POST':
-        _handle_edit_form(request.form)
+        formHandler.update_control_from_edit_form(req)
         return redirect('/index')
     return render_template('edit_form.html',
                            service=_get_service_by_name(req.args['name']))
 
 
-def _handle_edit_form(form):
-    if 'remove' in form['service_name']:
-        _handle_post_form_remove(form)
-    else:
-        _handle_post_form_edit(form)
-
-
-def _handle_post_form_remove(form):
-    services = _get_services()
-    for s in services:
-        if ("%s_remove" % s.get_name()) == form['service_name']:
-            services.remove(s)
-    _create_json_file(_create_control_json(services))
-
-
-def _handle_post_form_edit(form):
-    services = _get_services()
-    new = decodables.Service(
-        form['service_name'], _create_routes_from_form(form))
-    for s in services:
-        if s.get_name() == new.get_name():
-            services.remove(s)
-            services.append(new)
-    _create_json_file(_create_control_json(services))
-
-
-def _handle_post_form_add(form):
-    services = _get_services()
-    services.append(decodables.Service(
-        form['service_name'], _create_routes_from_form(form)))
-    _create_json_file(_create_control_json(services))
-
-
-def _create_routes_from_form(form):
-    routes = []
-    for i, r in enumerate(form.getlist('route')):
-        responses = form.getlist('responses')[i].split('\r\n')
-        routes.append(decodables.Route(
-            r, responses[0], 200, 0, responses).serialize())
-    return routes
-
-
 def _get_service_by_name(name):
-    for s in _get_services():
+    for s in jsonHandler.get_services():
         if name == s.get_name():
             return s
     return None
-
-
-def _create_json_file(json_file):
-    with open('./control/control.json', 'w') as f:
-        f.write(json_file)
