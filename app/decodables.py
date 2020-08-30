@@ -1,11 +1,6 @@
 
-
 def generate_route(routes):
     return [Route.from_dict(route) for route in routes]
-
-
-def get_services_names(services):
-    return [s.get_name() for s in services]
 
 
 class Service:
@@ -27,12 +22,10 @@ class Service:
         return [r.get_path() for r in self.routes]
 
     def get_response_for_path(self, path):
-        for r in self.routes:
-            if r.get_path() == path:
-                return (r.get_current_response(),
-                        r.get_status(),
-                        r.get_delay())
-        return None
+        try:
+            return list(filter(lambda r: r.get_path() == path, self.routes))[0].to_tuple()
+        except:
+            return None
 
     def serialize(self):
         return {
@@ -97,6 +90,9 @@ class Route:
 
     def get_responses_json(self):
         return [r.split('/')[-1] for r in self.get_responses()]
+
+    def to_tuple(self):
+        return (self.get_current_response(), self.get_status(), self.get_delay())
 
     def update_routes(self):
         if len(self.responses) > 0:

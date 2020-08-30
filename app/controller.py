@@ -1,6 +1,6 @@
 import time
 from flask import render_template, Response, json, redirect
-from . import formHandler, jsonHandler
+from . import formHandler, jsonHandler, decodables, modelHandler
 
 
 def get_response_for_route(path, req):
@@ -16,28 +16,38 @@ def get_response_for_route(path, req):
 
 def _get_response(path):
     services = jsonHandler.get_services()
-    for s in services:
-        for p in s.get_paths():
-            if _has_route_with_parameter(path, p):
-                response = s.get_response_for_path(p)
-                return _build_reponse(response)
+    existing_paths = modelHandler.get_paths_tuple(services)
 
-    return _get_response_for_path(path, services)
+    if path in existing_paths[0]:
+        print("in regular")
+        return _try_response_for_path(path, services)
 
-
-def _get_response_for_path(path, services):
-    for s in services:
-        if path in s.get_paths():
-            response = s.get_response_for_path(path)
-            return _build_reponse(response)
-    return Response('path not found', status=404)
+    return _try_response_for_path_with_param(path, existing_paths[1], services)
 
 
-def _has_route_with_parameter(path1, path2):
-    resp = set(path2.split('/')).difference(path1.split('/'))
-    if len(resp) == 1:
-        return list(resp)[0] == 'PARAMETER'
-    return False
+def _try_response_for_path(path, services):
+    route = modelHandler.get_response_from_path(path, services)
+    return _get_response_for_route(route)
+
+
+def _try_response_for_path_with_param(path, paths, services):
+    route = None
+
+    print("try with params")
+
+    for p in paths:
+        if modelHandler.is_same_route(path, p):
+            print("found route")
+            route = modelHandler.get_response_from_path(p, services)
+
+    return _get_response_for_route(route)
+
+
+def _get_response_for_route(route):
+    if route is None:
+        return Response('path not found', status=404)
+
+    return _build_reponse(route.to_tuple())
 
 
 def _handle_index(req):
