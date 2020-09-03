@@ -1,4 +1,4 @@
-from . import decodables, jsonHandler, fileHandler
+from . import decodables, jsonHandler, fileHandler, modelHandler
 
 
 def update_control_from_post_form(form):
@@ -20,7 +20,7 @@ def update_control_from_post_form_add_new(req):
     new_routes = _create_routes_from_form(req)
     services = jsonHandler.get_services()
 
-    if service_name in decodables.get_services_names(services):
+    if service_name in modelHandler.get_services_names(services):
         _add_routes_to_existing_service(services,
                                         new_routes,
                                         service_name)
