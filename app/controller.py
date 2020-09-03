@@ -19,7 +19,6 @@ def _get_response(path):
     existing_paths = modelHandler.get_paths_tuple(services)
 
     if path in existing_paths[0]:
-        print("in regular")
         return _try_response_for_path(path, services)
 
     return _try_response_for_path_with_param(path, existing_paths[1], services)
@@ -33,11 +32,8 @@ def _try_response_for_path(path, services):
 def _try_response_for_path_with_param(path, paths, services):
     route = None
 
-    print("try with params")
-
     for p in paths:
         if modelHandler.is_same_route(path, p):
-            print("found route")
             route = modelHandler.get_response_from_path(p, services)
 
     return _get_response_for_route(route)

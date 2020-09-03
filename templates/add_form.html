@@ -10,7 +10,6 @@
 
 <body>
   <h3>Add new service</h3>
-
   <form action="/add" method="POST" enctype="multipart/form-data">
     <div id="serviceContainer">
 
@@ -19,19 +18,22 @@
         <input type="text" value="" name="service_name">
       </div>
 
-      <div class="routes_container">
-        <div class="form_element" id="routeId">
-          <label>route: </label>
-          <input type="text" value="" name="route">
-        </div>
+      <ul id="dynamicList">
+        <div class="routes_container">
+          <div class="form_element" id="routeId">
+            <label>route: </label>
+            <input type="text" value="" name="route">
+          </div>
 
-        <div class="space8"></div>
-        responses
-        <div class="form_element">
-          <input type="file" multiple="multiple" name="responses0">
-        </div>
+          <div class="space8"></div>
+          responses
+          <div class="form_element">
+            <input type="file" multiple="multiple" name="responses0">
+          </div>
 
-        <div class="space16"></div>
+          <div class="space16"></div>
+        </ul>
+
       </div>
     </div>
 

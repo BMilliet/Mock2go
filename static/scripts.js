@@ -1,6 +1,6 @@
 
 let addRouteButton = document.querySelector('#addRouteButton');
-
+let dynamicList = document.getElementById('dynamicList');
 
 addRouteButton.addEventListener('click', () => {
   let routesCount = document.querySelectorAll('#routeId').length;
@@ -21,5 +21,9 @@ addRouteButton.addEventListener('click', () => {
                         <div class="space16"></div>
                         </div>`;
 
-  document.getElementById('serviceContainer').innerHTML += routeTemplate;
+  let div = document.createElement("div");
+  div.innerHTML = routeTemplate;
+
+  dynamicList.appendChild(div);
+
 });
