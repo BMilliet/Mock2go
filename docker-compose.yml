@@ -1,7 +1,7 @@
 version: '3.7'
 
 services:
-  flask_mock_api:
+  mock2go:
     build: .
     volumes:
       - .:/app
