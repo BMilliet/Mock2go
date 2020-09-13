@@ -1,6 +1,6 @@
 import time
 from flask import render_template, Response, json, redirect
-from . import formHandler, jsonHandler, decodables, modelHandler
+from . import formHandler, jsonHandler, decodables, modelHandler, utils
 
 
 def get_response_for_route(path, req):
@@ -18,25 +18,12 @@ def _get_response(path):
     services = jsonHandler.get_services()
     existing_paths = modelHandler.get_paths_tuple(services)
 
-    if path in existing_paths[0]:
-        return _try_response_for_path(path, services)
+    if utils.search_path_in(path, existing_paths[0]) is not None:
+        return _get_response_for_route(modelHandler.get_response_from_path(path, services))
 
-    return _try_response_for_path_with_param(path, existing_paths[1], services)
-
-
-def _try_response_for_path(path, services):
-    route = modelHandler.get_response_from_path(path, services)
-    return _get_response_for_route(route)
-
-
-def _try_response_for_path_with_param(path, paths, services):
-    route = None
-
-    for p in paths:
-        if modelHandler.is_same_route(path, p):
-            route = modelHandler.get_response_from_path(p, services)
-
-    return _get_response_for_route(route)
+    return _get_response_for_route(
+        modelHandler.get_response_from_path(
+            utils.search_path_with_param_in(path, existing_paths[1]), services))
 
 
 def _get_response_for_route(route):

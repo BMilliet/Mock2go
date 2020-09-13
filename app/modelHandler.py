@@ -19,13 +19,6 @@ def get_response_from_path(path, services):
     return _get_route_for_path(path, _get_all_routes_from(services))
 
 
-def is_same_route(path1, path2):
-    try:
-        return list(set(path2.split('/')).difference(path1.split('/')))[0] == 'PARAMETER'
-    except:
-        return False
-
-
 def _get_all_paths_from_all(services):
     return [path for route_paths in _get_all_regular_paths_from(services) for path in route_paths]
 
