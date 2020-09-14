@@ -1,11 +1,12 @@
 from flask import Flask, request
-from app import controller
+from app import controller, fileHandler
 
 app = Flask(__name__)
 
 app.config['ENV'] = 'Development'
 app.config['DEBUG'] = True
 
+fileHandler.setup_if_needed()
 
 @app.route('/<path:string_route>', methods=['GET', 'POST'])
 def get_route(string_route):
@@ -13,4 +14,4 @@ def get_route(string_route):
 
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0')
+    app.run()
