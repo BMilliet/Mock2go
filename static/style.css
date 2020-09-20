@@ -50,6 +50,10 @@ div.space8 {
   height: 8px;
 }
 
+input.pathInput {
+  width: 600px;
+}
+
 footer {
   position: fixed;
   height: 70px;
