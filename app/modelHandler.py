@@ -16,7 +16,27 @@ def get_paths_tuple(services):
 
 
 def get_response_from_path(path, services):
-    return _get_route_for_path(path, _get_all_routes_from(services))
+    if path is None:
+        return None
+
+    all_routes = sorted(_get_all_routes_from(
+        services),
+        key=lambda e: e.get_path())
+
+    start = 0
+    end = len(all_routes) - 1
+
+    while start <= end:
+
+        middle = int((start + end) / 2)
+        list_mid = all_routes[middle].get_path()
+
+        if list_mid > path:
+            end = middle - 1
+        elif list_mid < path:
+            start = middle + 1
+        else:
+            return all_routes[middle]
 
 
 def _get_all_paths_from_all(services):
@@ -33,10 +53,3 @@ def _get_all_routes_from(services):
         for r in s.get_routes():
             routes.append(r)
     return routes
-
-
-def _get_route_for_path(path, routes):
-    try:
-        return list(filter(lambda r: r.get_path() == path, routes))[0]
-    except:
-        return None

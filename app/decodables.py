@@ -70,6 +70,11 @@ class Route:
     def __str__(self):
         return 'Route => path: %s, responses%s' % (self.get_path(), self.get_responses())
 
+    def __eq__(self, other):
+        if not isinstance(other, Route):
+            return False
+        return self.path == other.path and self.current_response == other.current_response and self.status == other.status and self.delay == other.delay and self.responses == other.responses
+
     def get_path(self):
         return self.path
 

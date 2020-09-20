@@ -142,3 +142,7 @@ cython_debug/
 .DS_Store
 test_file.py
 test_file.txt
+
+# project
+control/
+jsonMock/
